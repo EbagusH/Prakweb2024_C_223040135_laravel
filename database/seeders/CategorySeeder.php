@@ -16,8 +16,8 @@ class CategorySeeder extends Seeder
         // Category::factory(3)->create();
 
         Category::create([
-            'name' => 'Praktikum Web',
-            'slug' => 'praktikum-web',
+            'name' => 'Iot',
+            'slug' => 'iot',
             'color' => 'red'
         ]);
 

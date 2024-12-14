@@ -14,19 +14,22 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            // $table->unsignedBigInteger('author_id');
-            // $table->foreign('author_id')->references('id')->on('users');
             $table->foreignId('author_id')->constrained(
                 table: 'users',
                 indexName: 'posts_author_id'
             );
             $table->foreignId('category_id')->constrained(
                 table: 'categories',
-                indexName: 'posts_category_id'
+                indexName: 'posts_acategory_id'
             );
             $table->string('slug')->unique();
-            $table->text('body');
+            $table->string('image')->nullable();
+            $table->string('body');
             $table->timestamps();
+        });
+
+        Schema::table('posts', function (Blueprint $table) {
+            $table->text('excerpt')->nullable();
         });
     }
 
@@ -36,5 +39,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('posts');
+
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropColumn('excerpt');
+        });
     }
 };

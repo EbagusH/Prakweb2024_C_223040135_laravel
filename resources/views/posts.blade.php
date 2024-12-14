@@ -36,7 +36,12 @@
             @forelse($posts as $post)
 
             <article class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                <div class="flex justify-between items-center mb-5 text-gray-500">
+                <div class="card" style="width: 18rem;">
+                    @if($post->image)
+                    <img src="{{ asset('/storage/'. $post->image) }}" alt="{{ $post->category->name }}" class="mb-4 w-full h-48 object-cover rounded-lg">
+                    @else
+                    <img src="https://source.unsplash.com/1200x400" alt="" class="mb-4 w-full h-48 object-cover rounded-lg">
+                    @endif
                     <a href="/posts?category={{ $post->category->slug }}">
                         <span class="bg-{{ $post->category->color }}-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800">
                             {{ $post->category->name }}
@@ -44,10 +49,13 @@
                     </a>
                     <span class="text-sm">{{ $post->created_at->diffForHumans() }}</span>
                 </div>
-                <a href="/posts/{{ $post->slug }}" class="hover:underline">
-                    <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $post->title }}</h2>
-                </a>
-                <p class="mb-5 font-light text-gray-500 dark:text-gray-400">{{ Str::limit($post->body, 150) }}</p>
+
+                <div class="card-body">
+                    <a href="/posts/{{ $post->slug }}" class="hover:underline">
+                        <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $post->title }}</h2>
+                    </a>
+                </div>
+                <p class="mb-5 font-light text-gray-800 dark:text-gray-400">{{ Str::limit($post->body, 150) }}</p>
                 <div class="flex justify-between items-center">
                     <a href="/posts?author={{ $post->author->username }}">
                         <div class="flex items-center space-x-3">
